@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../app.css';
+import './app.css';
 
 import Popular from './Popular';
 
@@ -10,7 +10,7 @@ import Popular from './Popular';
 class App extends Component {
 	render() {
 		return(
-			<div>
+			<div className='container'>
 				<Popular />
 			</div>
 		);

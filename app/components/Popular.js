@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import './popular.css';
 
 // stateless functional component 
-function SelectLanguage (props) {
-	var languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
+const SelectLanguage = ({props}) => {
+	let languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
 
 	return(
 		<ul className='languages'>
@@ -18,8 +18,8 @@ function SelectLanguage (props) {
 					</li>
 				)
 			})}
-			</ul>
-		)
+		</ul>
+	)
 }
 
 // class SelectLanguage extends Component {

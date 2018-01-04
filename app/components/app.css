@@ -22,6 +22,11 @@ li {
 	list-style-type: none;
 }
 
+a { 
+	text-decoration: none;
+	color: #d0021b;
+ }
+
 .container {
 	max-width: 1200px;
 	margin: 0 auto;

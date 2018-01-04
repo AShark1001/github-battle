@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './nav.css';
 
 function Nav() {
@@ -12,13 +12,13 @@ function Nav() {
 			</li>
 
 			<li>
-				<NavLink exact activeClassName='active' to="/battle">
+				<NavLink activeClassName='active' to="/battle">
 					Battle
 				</NavLink>
 			</li>
 
 			<li>
-				<NavLink exact activeClassName='active' to="/popular">
+				<NavLink activeClassName='active' to="/popular">
 					Popular
 				</NavLink>
 			</li>

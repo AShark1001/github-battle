@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './app.css';
 
 import Nav from './Nav.jsx';
 import Popular from './Popular.jsx';
+import Home from './Home.jsx';
+import Battle from './Battle.jsx';
 
 // state 
 // lifecycle event 
@@ -15,10 +17,16 @@ class App extends Component {
 			<Router>
 				<div className='container'>
 					<Nav />
-					<Route path='/popular' component={Popular} />
+					<Switch>
+						<Route exact path='/' component={Home} />
+						<Route exact path='/battle' component={Battle} />
+						<Route path='/popular' component={Popular} />
+						<Route render={function() {
+							return <p>Not found</p>
+						}} />
+					</Switch>
 				</div>
 			</Router>
-			
 		);
 	}
 }

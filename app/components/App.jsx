@@ -11,6 +11,12 @@ import Battle from './Battle.jsx';
 // lifecycle event 
 // UI => render view
 
+function NotFoundView() {
+	return (
+		<p>Not Found.</p>
+	)
+}
+
 class App extends Component {
 	render() {
 		return(
@@ -21,9 +27,7 @@ class App extends Component {
 						<Route exact path='/' component={Home} />
 						<Route exact path='/battle' component={Battle} />
 						<Route path='/popular' component={Popular} />
-						<Route render={function() {
-							return <p>Not found</p>
-						}} />
+						<Route render={NotFoundView} />
 					</Switch>
 				</div>
 			</Router>

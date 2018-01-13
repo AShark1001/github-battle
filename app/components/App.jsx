@@ -6,6 +6,7 @@ import Nav from './Nav.jsx';
 import Popular from './Popular.jsx';
 import Home from './Home.jsx';
 import Battle from './Battle.jsx';
+import Results from './Results.jsx';
 
 // state 
 // lifecycle event 
@@ -26,6 +27,7 @@ class App extends Component {
 					<Switch>
 						<Route exact path='/' component={Home} />
 						<Route exact path='/battle' component={Battle} />
+						<Route path='/battle/results' component={Results} />
 						<Route path='/popular' component={Popular} />
 						<Route render={NotFoundView} />
 					</Switch>

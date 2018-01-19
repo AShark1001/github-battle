@@ -65,6 +65,5 @@ export function fetchPopularRepos (language) {
 	return axios.get(encodedURI)
 		.then((response) => {
 			return response.data.items;
-		});
-	}
+	});
 }

@@ -11,7 +11,7 @@ function getProfile (username) {
 }
 
 function getRepos (username) {
-	return axios.get(`https://api.github.com/users/${username}/repos&per_page=100`);
+	return axios.get(`https://api.github.com/users/${username}/repos`);
 }
 
 function getStarCount (repos) {
@@ -20,11 +20,8 @@ function getStarCount (repos) {
 	}, 0);
 }
 
-function calculateScore (profile, repos) {
-	let followers = profile.followers;
-	let totalStars = getStarCount(repos);
-
-	return (followers * 3) + totalStars;
+function calculateScore ({ followers }, repos) {
+	return (followers * 3) + getStarCount(repos);
 }
 
 function handleError (error) {
@@ -33,28 +30,21 @@ function handleError (error) {
 }
 
 function getUserData (player) {
-	return axios.all([
+	return Promise.all([
 		getProfile(player),
-		getRepo(player)
-	]).then((data) => {
-		let profile = data[0];
-		let repos = data[1];
-
-		return {
-			profile,
-			score: calculateScore(profile, repos)
-		}
-	});
+		getRepos(player)
+	]).then(([profile,repos]) => ({
+		profile,
+		score: calculateScore(profile, repos)
+	}));
 }
 
 function sortPlayers (players) {
-	return players.sort((a,b) => {
-		return b.score - a.score;
-	});
+	return players.sort((a,b) =>  b.score - a.score);
 }
 
 export function	battle (players) {
-	return axios.all(players.map(getUserData))
+	return Promise.all(players.map(getUserData))
 	 .then(sortPlayers)
 	 .catch(handleError);
 }

@@ -24,6 +24,7 @@ class App extends Component {
 			<Router>
 				<div className='container'>
 					<Nav />
+
 					<Switch>
 						<Route exact path='/' component={Home} />
 						<Route exact path='/battle' component={Battle} />
@@ -31,6 +32,7 @@ class App extends Component {
 						<Route path='/popular' component={Popular} />
 						<Route render={NotFoundView} />
 					</Switch>
+					
 				</div>
 			</Router>
 		);

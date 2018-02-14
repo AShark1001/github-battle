@@ -2,62 +2,58 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './popular.css';
 
-import API from '../common/api';
+import { fetchPopularRepos, } from '../common/api';
 
 // stateless functional component 
-const SelectLanguage = (props) => {
-	let languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
+function SelectLanguage ({ selectedLanguage, onSelect }) {
+	const languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
 
 	return (
 		<ul className='languages'>
-			{languages.map((lang) => {
-				return (
+			{languages.map((lang) => (
 					<li
-						style={lang === props.selectedLanguage ? { color: '#d0021b'}: null} 
-						onClick={props.onSelect.bind(null, lang)}
+						style={lang === selectedLanguage ? { color: '#d0021b'}: null} 
+						onClick={() => onSelect(lang)}
 						key={lang}>
 						{lang}
 					</li>
 				)
-			})}
+			)}
 		</ul>
 	)
 }
-
 
 SelectLanguage.propTypes = {
 	selectedLanguage: PropTypes.string.isRequired,
 	onSelect: PropTypes.func.isRequired
 };
 
-class RepoGrid extends Component {
-	render() {
-		return (
-			<ul className='popular-list'>
-				{this.props.repos.map((repo, index) => {
-					return (
-						<li key={repo.name} 
-							className='popular-item'>
-							<div className='popular-rank'>#{index + 1}</div>
-							<ul className='space-list-items'>
-								<li>
-									<img 
-										className='avatar'
-										src={repo.owner.avatar_url}
-										alt={`Avatar for ${repo.owner.login}`} />
-								</li>
-								<li>
-									<a href={repo.html_url}>{repo.name}</a>
-								</li>
-								<li>@{repo.owner.login}</li>
-								<li>{repo.stargazers_count} stars</li>
-							</ul>
-						</li>
-					)
-				})}
-			</ul>
-		)
-	}
+function RepoGrid ({ repos }) {
+	return (
+		<ul className='popular-list'>
+			{repos.map(({ name, stargazers_count, owner, html_url }, index) => {
+				return (
+					<li key={name} 
+						className='popular-item'>
+						<div className='popular-rank'>#{index + 1}</div>
+						<ul className='space-list-items'>
+							<li>
+								<img 
+									className='avatar'
+									src={owner.avatar_url}
+									alt={`Avatar for ${owner.login}`} />
+							</li>
+							<li>
+								<a href={html_url}>{name}</a>
+							</li>
+							<li>@{owner.login}</li>
+							<li>{stargazers_count} stars</li>
+						</ul>
+					</li>
+				)
+			})}
+		</ul>
+	)
 }
 
 RepoGrid.propTypes = {
@@ -88,25 +84,21 @@ class Popular extends Component {
 			}
 		});
 
-		API.fetchPopularRepos(lang)
-			.then((repos) => { 
-				this.setState(() => {
-					return {
-						repos: repos
-					}
-				})
-			});
+		fetchPopularRepos(lang)
+			.then((repos) => this.setState(() => ({ repos })));
 	}
 
 	render() {
+		const { selectedLanguage, repos } = this.state;
+
 		return (
 			<div>
 				<SelectLanguage 
 				selectedLanguage={this.state.selectedLanguage} 
 				onSelect={this.updateLanguage} />
-				{!this.state.repos
+				{!repos
 					? <p>LOADING</p>
-					: <RepoGrid repos={this.state.repos} />
+					: <RepoGrid repos={repos} />
 				}
 				
 			</div>
